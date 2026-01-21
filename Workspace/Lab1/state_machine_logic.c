@@ -1,29 +1,48 @@
 #include "state_machine_logic.h"
-#include <ti/devices/msp/msp.h>
+#include "initialize_leds.h"   // <-- gives you LED12A, LED12B, ALL_LED_BITS_A
+#include <stdint.h>
 
+/* Active-LOW LEDs: 1 = off, 0 = on */
+#define ALL_OFF_VALUE (ALL_LED_BITS_A)
+
+/* Choose which LEDs represent ON1 and ON2 */
+#define ON1_LED   LED12A
+#define ON2_LED   LED12B
 
 int GetNextState(int current_state)
 {
-    if (current_state == OFF) {
-        return ON1; // If the LED is off -> on
-    }
-    else {
-        if (current_state == ON1)
-            return ON2;
-        else
-            return OFF; // If the LED is on -> off
+    switch (current_state) {
+        case OFF: return ON1;
+        case ON1: return ON2;
+        default:  return OFF;   // ON2 -> OFF (and any unexpected value)
     }
 }
 
-int GetStateOutputGPIOA(int current_state) {
-    if ((current_state == ON1) || (current_state == ON2)) {
-        return 0x00000000;
+int GetStateOutputGPIOA(int current_state)
+{
+    uint32_t out = ALL_OFF_VALUE;   // start with all LEDs off (all LED bits = 1)
+
+    switch (current_state) {
+        case OFF:
+            break;
+
+        case ON1:
+            out &= ~ON1_LED;        // turn LED on (active-low)
+            break;
+
+        case ON2:
+            out &= ~ON2_LED;        // turn LED on (active-low)
+            break;
+
+        default:
+            break;
     }
-    else {
-        return 0x00000001;
-    }
+
+    return (int)out;
 }
 
-int GetStateOutputGPIOB(int current_state) {
+int GetStateOutputGPIOB(int current_state)
+{
+    (void)current_state;
     return 0;
-};
+}
