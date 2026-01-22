@@ -6,7 +6,7 @@
 
 void InitializeGPIO(void)
 {
-    /* 1) Reset and power GPIOA */
+    /* Reset and power GPIOA */
     GPIOA->GPRCM.RSTCTL = (GPIO_RSTCTL_KEY_UNLOCK_W |
                           GPIO_RSTCTL_RESETSTKYCLR_CLR |
                           GPIO_RSTCTL_RESETASSERT_ASSERT);
@@ -16,7 +16,7 @@ void InitializeGPIO(void)
 
     delay_cycles(POWER_STARTUP_DELAY);
 
-    /* 2) Configure IOMUX for each PA pin (GPIO function 1) */
+    /* Configure IOMUX pin */
     IOMUX->SECCFG.PINCM[IOMUX_PINCM1]  = IOMUX_PINCM_PC_CONNECTED | GPIO_FUNC1;  // PA0
     IOMUX->SECCFG.PINCM[IOMUX_PINCM2]  = IOMUX_PINCM_PC_CONNECTED | GPIO_FUNC1;  // PA1
     IOMUX->SECCFG.PINCM[IOMUX_PINCM6]  = IOMUX_PINCM_PC_CONNECTED | GPIO_FUNC1;  // PA5
@@ -42,7 +42,7 @@ void InitializeGPIO(void)
     IOMUX->SECCFG.PINCM[IOMUX_PINCM28] = IOMUX_PINCM_PC_CONNECTED | GPIO_FUNC1;  // PA27
     IOMUX->SECCFG.PINCM[IOMUX_PINCM29] = IOMUX_PINCM_PC_CONNECTED | GPIO_FUNC1;  // PA28
 
-    /* 3) Initialize LEDs OFF (active-LOW → HIGH) and enable outputs */
+    /* Initialize LEDs OFF and enable outputs */
     GPIOA->DOUTSET31_0 = ALL_LED_BITS_A;   // LEDs OFF
     GPIOA->DOESET31_0  = ALL_LED_BITS_A;   // Enable outputs
 }

@@ -3,10 +3,8 @@
 
 #include <stdint.h>
 
-/* Public function */
 void InitializeGPIO(void);
 
-/* ---- Shared LED bit masks on GPIOA ---- */
 #define GPIO_FUNC1          (0x00000001u)
 #define PA_BIT(n)           (1u << (n))
 
@@ -38,7 +36,7 @@ void InitializeGPIO(void);
 #define LED2B   PA_BIT(23)
 #define LED1B   PA_BIT(25)
 
-/* All LED pins on GPIOA */
+/* All LED pins */
 #define ALL_LED_BITS_A ( \
     LED12A | LED11A | LED10A | LED9A | LED8A | LED7A | LED6A | LED5A | \
     LED4A  | LED3A  | LED2A  | LED1A  | \
