@@ -10,28 +10,23 @@
 #include "initialize_leds.h"
 #include "state_machine_logic.h"
 
-/* 
- * Delay for approximately 1 second at 32 MHz CPU_CLK
- * Adjust this value to achieve exactly 1 second timing
- */
+/* delay for 1 second */
 #define DELAY (32000000)
 
 int main(void)
 {
-    /* Initialize all GPIO pins for LEDs */
+    /* initialize all GPIO pins for LEDs */
     InitializeGPIO();
 
-    int state = 0;  /* State variable for compatibility */
+    int state = 0;  /* state variable for compatibility */
 
-    /* Main loop - runs forever, updating clock every second */
     while (1) {
-        /* Get output pattern for GPIOA */
         int output = GetStateOutputGPIOA(state);
 
         /* Update GPIO outputs */
         GPIOA->DOUT31_0 = output;
 
-        /* Advance to next state (increment counters) */
+        /* Go to the next state */
         state = GetNextState(state);
 
         /* Wait 1 second before next update */
