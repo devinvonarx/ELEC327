@@ -52,7 +52,7 @@ void InitializeGPIO(void)
     mux_gpio(IOMUX_PINCM60);  /* PA27 */
     mux_gpio(IOMUX_PINCM3);   /* PA28 */
 
-    /* 3) Set all LEDs to off and enable outputs */
+    /* Set all LEDs to off and enable outputs */
     uint32_t leds = (1u<<0)  | (1u<<1)  | (1u<<2)  |
                     (1u<<5)  | (1u<<6)  | (1u<<7)  | (1u<<8)  |
                     (1u<<9)  | (1u<<10) | (1u<<11) | (1u<<12) |
